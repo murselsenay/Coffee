@@ -20,11 +20,29 @@ public class MouseBehaviour : MonoBehaviour
         if (Input.GetMouseButton (0)) {
             if (Physics.Raycast (Camera.main.ScreenPointToRay (Input.mousePosition), out hit)) {
                 if (hit.transform.gameObject.tag == "DeformableMesh") {
-                    hit.transform.GetComponent<MeshDeformer> ().Deform (hit.point, 0.15f, 0.1f, -0.25f, -0.1f, hit.normal);
+                    hit.transform.GetComponent<MeshDeformer> ().Deform (hit.point, 0.15f, 0.1f, -0.15f, -0.2f, hit.barycentricCoordinate);
                 }
             }
         }
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+
+        if (Input.GetAxisRaw("Horizontal")<0f)
+        {
+            transform.Rotate(0f, -1f, 0f,Space.World);
+        }
+        if (Input.GetAxisRaw("Horizontal") > 0f)
+        {
+            transform.Rotate(0f, 1f, 0f, Space.World);
+        }
+        if (Input.GetAxisRaw("Vertical") < 0f)
+        {
+            transform.Translate(0f, 0f, -0.1f, Space.World);
+        }
+        if (Input.GetAxisRaw("Vertical") > 0f)
+        {
+            transform.Translate(0f, 0f, 0.1f, Space.World);
+        }
+
     }
     void OnGUI()
     {
