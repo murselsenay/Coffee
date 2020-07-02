@@ -6,14 +6,13 @@ using UnityEngine.UI;
 
 public class CoffeeHill : MonoBehaviour
 {
-    private int counter=0;
-    private int limit = 0;
-
+    private int counter = 0;
     public Text txt;
     // Start is called before the first frame update
     void Start()
     {
 
+        changeColor(128, 128, 128, 255);
     }
 
     // Update is called once per frame
@@ -21,28 +20,29 @@ public class CoffeeHill : MonoBehaviour
     {
 
     }
-    private void OnParticleCollision(GameObject other)
+    private void OnParticleCollision(GameObject other)//değişecek
     {
-        Debug.Log("d");
         counter += 1;
-        if (limit<=25)
+        if (counter == 1)
         {
-            if (counter >= 5)
-            {
-                fillCoffee();
-                counter = 0;
-            }
-            limit++;
+            changeColor(125, 81, 57, 255);
         }
-        else
+        if (CoffeeTank.instance._beansCount > 1)
         {
-            Destroy(other.gameObject);
-            txt.text = "You can manipulate \n the grinded coffee with mouse now.";
+            fillCoffee();
         }
-       
+        
+        Debug.Log(CoffeeTank.instance._beansCount.ToString());
+
     }
     void fillCoffee()
     {
-        transform.localScale += new Vector3(0, 0, 0.01f);
+        transform.parent.localScale += new Vector3(0, 0.5f, 0);
+    }
+    void changeColor(byte r, byte g, byte b, byte a)
+    {
+        var coffeeColor = new MaterialPropertyBlock();
+        coffeeColor.SetColor("_BaseColor", new Color32(r, g, b, a));
+        GetComponent<Renderer>().SetPropertyBlock(coffeeColor);
     }
 }
