@@ -5,33 +5,48 @@ using UnityEngine;
 public class ButtonScript : MonoBehaviour
 {
     public GameObject light;
+    internal bool canStartGrinding = false;
+    public static ButtonScript instance;
     // Start is called before the first frame update
     void Start()
     {
-        
+        instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnMouseDown()
     {
-        if (CoffeeTank.instance.beansCount== 0f)
+        if (CoffeeTank.instance.beansCount == 0f)
         {
-            GameObject[] coffeeBeans = GameObject.FindGameObjectsWithTag("CoffeeBeans");
-            foreach (GameObject beans in coffeeBeans)
+            if (canStartGrinding)
             {
-                beans.GetComponent<CoffeeBean>().StartBeGrinded();
+                GameObject[] coffeeBeans = GameObject.FindGameObjectsWithTag("CoffeeBeans");
+                foreach (GameObject beans in coffeeBeans)
+                {
+                    beans.GetComponent<CoffeeBean>().StartBeGrinded();
+                }
+                CoffeeTank.instance.StartGrind();
+                light.SetActive(true);
             }
-            CoffeeTank.instance.StartGrind();
-            light.SetActive(true);
+            else
+            {
+                GameManager.instance.canFade = false;
+                GameManager.instance.statusText.text = "Put portafilter\nto correct position.";
+            }
+
         }
         else
         {
-            Debug.Log("Wait");
+
+            GameManager.instance.canFade = false;
+            GameManager.instance.statusText.text = "Wait for \nfilling coffee.";
+
+
         }
-        
+
     }
 }
