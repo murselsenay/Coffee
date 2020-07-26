@@ -8,18 +8,18 @@ public class CoffeeBean : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
+        //instance = this;
 
     }
     public void StartBeGrinded()
     {
-        float r = Random.Range(1f, 5f);
-        Invoke("GrindCoffee", r);
-        Destroy(gameObject, r);
+        //float r = Random.Range(1f, 5f);
+        //Invoke("GrindCoffee", r);
+        //Destroy(gameObject, r);
     }
     void GrindCoffee()
     {
-        CoffeeTank.instance._beansCount -= 1;
+        //CoffeeTank.instance._beansCount -= 1;
     }
     // Update is called once per frame
     void Update()
