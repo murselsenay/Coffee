@@ -17,9 +17,10 @@ public class MeshDeformer : MonoBehaviour
     MeshCollider meshCollider;
     List<Vector3> vertices;
     public GameObject sphere;
+    public bool isPortafilter = false;
     public static MeshDeformer instance;
     Vector3 dir;
-    public bool canDeform=false;
+    public bool canDeform = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,27 +42,31 @@ public class MeshDeformer : MonoBehaviour
 
     public void Deform(Vector3 point, float radius, float stepRadius)
     {
-        if (canDeform)
+        if (isPortafilter)
         {
-            for (int i = 0; i < vertices.Count; i++)
+            if (canDeform)
             {
-                Vector3 vi = transform.TransformPoint(vertices[i]);
-                float distance = Vector3.Distance(point, vi);
-                dir = transform.position - vertices[i];
-                for (float r = 0.0f; r < radius; r += stepRadius)
+                for (int i = 0; i < vertices.Count; i++)
                 {
-                    if (distance < r)
+                    Vector3 vi = transform.TransformPoint(vertices[i]);
+                    float distance = Vector3.Distance(point, vi);
+                    dir = transform.position - vertices[i];
+                    for (float r = 0.0f; r < radius; r += stepRadius)
                     {
-                        Vector3 deformation = dir;
-                        vertices[i] += transform.InverseTransformPoint(deformation);
-                        break;
+                        if (distance < r)
+                        {
+                            Vector3 deformation = dir;
+                            vertices[i] += transform.InverseTransformPoint(deformation);
+                            break;
+                        }
                     }
+
                 }
-              
+
             }
-            
         }
-        
+
+
         if (recalculateNormals)
             mesh.RecalculateNormals();
 

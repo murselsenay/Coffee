@@ -17,10 +17,22 @@ public class CoffeeDispanser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distanceToEspressoHolder = Vector3.Distance(transform.GetChild(1).position, espressoHolder.transform.GetChild(0).position);
+        float distanceToEspressoHolder = Vector3.Distance(transform.GetChild(1).position, espressoHolder.transform.position);
         if (distanceToEspressoHolder < range)
         {
             ButtonScript.instance.canStartGrinding = true;
+            GrindedCoffeeTank.instance.minYLimit = 10f;
+            GrindedCoffeeTank.instance.maxYLimit = 12f;
+            GrindedCoffeeTank.instance.checkDispanserPosition = true;
+            GrindedCoffeeTank.instance.dispanser = gameObject.transform.GetChild(1).gameObject;
+        }
+        else
+        {
+            ButtonScript.instance.canStartGrinding = false;
+            GrindedCoffeeTank.instance.minYLimit = 10f;
+            GrindedCoffeeTank.instance.maxYLimit = 12f;
+            GrindedCoffeeTank.instance.checkDispanserPosition = false;
+            GrindedCoffeeTank.instance.dispanser =null;
         }
     }
     void OnDrawGizmosSelected()

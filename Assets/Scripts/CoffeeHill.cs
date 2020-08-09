@@ -8,6 +8,10 @@ public class CoffeeHill : MonoBehaviour
 {
     private int counter = 0;
     public Text txt;
+    float grindedCoffeeAmount;
+    public bool jar = false;
+    public bool portafilter = false;
+    public bool grinderMachine = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,15 +33,21 @@ public class CoffeeHill : MonoBehaviour
         }
         if (CoffeeTank.instance._beansCount > 1)
         {
-            fillCoffee();
+            if (portafilter)
+                grindedCoffeeAmount = 0.08f;
+            if (jar)
+                grindedCoffeeAmount = 0.0025f;
+            if (grinderMachine)
+                grindedCoffeeAmount = 0.00025f;
+
+
+            fillCoffee(grindedCoffeeAmount);
         }
-        
-        Debug.Log(CoffeeTank.instance._beansCount.ToString());
 
     }
-    void fillCoffee()
+    void fillCoffee(float _grindedCoffeeAmount)
     {
-        transform.parent.localScale += new Vector3(0, 0.5f, 0);
+        transform.parent.localScale += new Vector3(0, _grindedCoffeeAmount, 0);
     }
     void changeColor(byte r, byte g, byte b, byte a)
     {

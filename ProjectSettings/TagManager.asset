@@ -7,6 +7,8 @@ TagManager:
   - DeformableMesh
   - CoffeeBeans
   - CoffeeParticle
+  - CoffeePackage
+  - StartButton
   layers:
   - Default
   - TransparentFX

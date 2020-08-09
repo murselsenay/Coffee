@@ -11,6 +11,7 @@ public class ButtonScript : MonoBehaviour
     void Start()
     {
         instance = this;
+        gameObject.GetComponent<BoxCollider>().enabled = true;
     }
 
     // Update is called once per frame
@@ -24,6 +25,7 @@ public class ButtonScript : MonoBehaviour
         {
             if (canStartGrinding)
             {
+                gameObject.GetComponent<BoxCollider>().enabled = false;
                 GameObject[] coffeeBeans = GameObject.FindGameObjectsWithTag("CoffeeBeans");
                 foreach (GameObject beans in coffeeBeans)
                 {

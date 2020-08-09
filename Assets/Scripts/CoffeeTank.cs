@@ -7,21 +7,41 @@ public class CoffeeTank : MonoBehaviour
 {
     public GameObject coffeeBeanPrefab;
     public GameObject coffeeParticlePrefab;
-    public GameObject info;
-    public Text infoText;
     public int beansCount;
-    internal int _beansCount;
+    internal int _beansCount = 20;
     public Transform spawnPoint;
     public Transform coffeeParticleSpawnPoint;
     List<GameObject> coffeeBeans = new List<GameObject>();
     public GameObject insCoffeeParticle = null;
     public static CoffeeTank instance;
     public bool grinding = false;
+
+
+
+    [Header("Info Text Options")]
+    bool canShowInfo = true;
+    GameObject instantiatedInfoTextCanvas;
+    public GameObject infoTextCanvas;
+    public bool right;
+    public bool bottom;
+    float offsetX, offsetY, offsetZ;
+    internal string coffeeName;
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
-        Fill();
+        if (right)
+        {
+            offsetX = 4f;
+            offsetY = 2f;
+            offsetZ = -1f;
+        }
+        if (bottom)
+        {
+            offsetX = 0f;
+            offsetY = -1.8f;
+            offsetZ = -1f;
+        }
         insCoffeeParticle = Instantiate(coffeeParticlePrefab, coffeeParticleSpawnPoint.transform.position, Quaternion.identity);
         insCoffeeParticle.SetActive(false);
     }
@@ -33,6 +53,8 @@ public class CoffeeTank : MonoBehaviour
     }
     public void StartGrind()
     {
+
+        _beansCount = Potentiometer.instance.coffeeBeansCount;
         insCoffeeParticle.SetActive(true);
         GameManager.instance.canFade = true;
         StartCoroutine(SwicthSpotLightOn());
@@ -41,9 +63,9 @@ public class CoffeeTank : MonoBehaviour
     }
     public void Fill()
     {
-        _beansCount = beansCount;
+
         StartCoroutine(FillTank());
-        
+
     }
     public IEnumerator FillTank()
     {
@@ -53,6 +75,7 @@ public class CoffeeTank : MonoBehaviour
             coffeeBeans.Add(Instantiate(coffeeBeanPrefab, new Vector3(spawnPoint.transform.position.x + Random.Range(-0.5f, 0.5f), spawnPoint.transform.position.y, spawnPoint.transform.position.z + Random.Range(-0.5f, 0.5f)), Quaternion.identity));
             yield return new WaitForSeconds(0.01f);
         }
+
     }
     public IEnumerator SwicthSpotLightOn()
     {
@@ -63,22 +86,44 @@ public class CoffeeTank : MonoBehaviour
         }
     }
 
-        private void OnMouseOver()
+    private void OnMouseOver()
     {
-        infoText.text = _beansCount.ToString() + " gr. Coffee";
-        info.SetActive(true);
+        ShowInfoText();
+
     }
     private void OnMouseExit()
     {
-        info.SetActive(false);
+        DestroyInfoText();
+
     }
     public IEnumerator DeleteBeans()
     {
-        for (int i = 0; i < coffeeBeans.Count; i++)
+        for (int i = 0; i < Potentiometer.instance.coffeeBeansCount; i++)
         {
+
             Destroy(coffeeBeans[i]);
             _beansCount -= 1;
             yield return new WaitForSeconds(0.12f);
+        }
+    }
+
+    void ShowInfoText()
+    {
+        if (canShowInfo)
+        {
+            instantiatedInfoTextCanvas = Instantiate(infoTextCanvas, new Vector3(transform.position.x + offsetX, transform.position.y + offsetY, transform.position.z + offsetZ), Quaternion.identity);
+            instantiatedInfoTextCanvas.transform.SetParent(this.transform);
+            instantiatedInfoTextCanvas.GetComponent<Info>().RefreshInfoText(_beansCount.ToString() + " gr." + coffeeName + "  Coffee", false);
+            canShowInfo = false;
+        }
+    }
+    void DestroyInfoText()
+    {
+        if (!canShowInfo)
+        {
+            canShowInfo = true;
+            Destroy(instantiatedInfoTextCanvas);
+
         }
     }
 }

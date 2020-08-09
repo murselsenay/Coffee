@@ -63,16 +63,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ButtonController.cs" />
     <Compile Include="Assets\Scripts\ButtonScript.cs" />
+    <Compile Include="Assets\Scripts\CameraPositionHandler.cs" />
     <Compile Include="Assets\Scripts\CoffeeBean.cs" />
     <Compile Include="Assets\Scripts\CoffeeDispanser.cs" />
     <Compile Include="Assets\Scripts\CoffeeHill.cs" />
+    <Compile Include="Assets\Scripts\CoffeePackage.cs" />
     <Compile Include="Assets\Scripts\CoffeeSpawner.cs" />
     <Compile Include="Assets\Scripts\CoffeeTank.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GrindedCoffeeTank.cs" />
     <Compile Include="Assets\Scripts\IcosphereBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Info.cs" />
+    <Compile Include="Assets\Scripts\InfoText.cs" />
+    <Compile Include="Assets\Scripts\Lid.cs" />
     <Compile Include="Assets\Scripts\MeshDeformer.cs" />
+    <Compile Include="Assets\Scripts\MoveCoffeeJar.cs" />
     <Compile Include="Assets\Scripts\MoveObjects.cs" />
+    <Compile Include="Assets\Scripts\Potentiometer.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Ms/Documents/GitHub/Coffee/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

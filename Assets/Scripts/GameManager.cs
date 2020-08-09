@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public Button fillBtn;
     internal bool canFade;
+    internal bool canGrind = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,10 +28,27 @@ public class GameManager : MonoBehaviour
                 fillBtn.interactable = true;
                 canFade = false;
                 statusText.text = "Done !";
+                StartCoroutine(SwicthSpotLightOff());
+                GameObject.FindGameObjectWithTag("StartButton").GetComponent<BoxCollider>().enabled = true;
                 CoffeeTank.instance.insCoffeeParticle.SetActive(false);
-                MeshDeformer.instance.canDeform = true;
+                if (MeshDeformer.instance!=null)
+                {
+                    MeshDeformer.instance.canDeform = true;
+                   
+
+                }
+              
             }
                 
+        }
+    }
+
+    public IEnumerator SwicthSpotLightOff()
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            CoffeeDispanser.spotLight.intensity -= 1;
+            yield return new WaitForSeconds(0.01f);
         }
     }
     public IEnumerator fadingText(string text)
