@@ -15,7 +15,7 @@ public class CoffeeDispanser : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float distanceToEspressoHolder = Vector3.Distance(transform.GetChild(1).position, espressoHolder.transform.position);
         if (distanceToEspressoHolder < range)

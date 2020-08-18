@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (CoffeeTank.instance.insCoffeeParticle != null)
         {
@@ -28,14 +28,12 @@ public class GameManager : MonoBehaviour
                 fillBtn.interactable = true;
                 canFade = false;
                 statusText.text = "Done !";
-                StartCoroutine(SwicthSpotLightOff());
+                //StartCoroutine(SwicthSpotLightOff());
                 GameObject.FindGameObjectWithTag("StartButton").GetComponent<BoxCollider>().enabled = true;
                 CoffeeTank.instance.insCoffeeParticle.SetActive(false);
                 if (MeshDeformer.instance!=null)
                 {
                     MeshDeformer.instance.canDeform = true;
-                   
-
                 }
               
             }
@@ -55,9 +53,9 @@ public class GameManager : MonoBehaviour
     {
         while (canFade)
         {
-            GameManager.instance.statusText.text = text;
+            statusText.text = text;
             yield return new WaitForSeconds(0.5f);
-            GameManager.instance.statusText.text = "";
+            statusText.text = "";
             yield return new WaitForSeconds(0.5f);
         }
     }

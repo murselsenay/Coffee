@@ -37,6 +37,7 @@ public class CoffeePackage : MonoBehaviour
     public bool right;
     public bool bottom;
     float offsetX, offsetY, offsetZ;
+    public bool leavedFromShelf = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +68,10 @@ public class CoffeePackage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (CoffeeTank.instance.beansCount == 0 && leavedFromShelf == true)
+        {
+            GoBacktoShelf();
+        }
     }
     void SetCoffeeType()
     {
@@ -141,12 +145,13 @@ public class CoffeePackage : MonoBehaviour
     }
     public void GotoCoffeeTankPosition()
     {
+        leavedFromShelf = true;
         StartCoroutine(GotoCoffeeTankPositionCoroutine());
     }
 
     public void GoBacktoShelf()
     {
-        
+
         StartCoroutine(GoBacktoShelfCoroutine());
     }
     public IEnumerator GotoCoffeeTankPositionCoroutine()
@@ -162,8 +167,7 @@ public class CoffeePackage : MonoBehaviour
             yield return null;
         }
         CoffeeTank.instance.Fill();
-        yield return new WaitForSeconds(3f);
-        GoBacktoShelf();
+
 
     }
     public IEnumerator GoBacktoShelfCoroutine()
@@ -193,7 +197,7 @@ public class CoffeePackage : MonoBehaviour
         {
             instantiatedInfoTextCanvas = Instantiate(infoTextCanvas, new Vector3(transform.position.x + offsetX, transform.position.y + offsetY, transform.position.z + offsetZ), Quaternion.identity);
             instantiatedInfoTextCanvas.transform.SetParent(this.transform);
-            instantiatedInfoTextCanvas.GetComponent<Info>().RefreshInfoText(coffeeName + "\n" + describtion + "\n" + weight.ToString() + " gr.\n" + "Brew Time: ~" + brewTime.ToString() + "m",true);
+            instantiatedInfoTextCanvas.GetComponent<Info>().RefreshInfoText(coffeeName + "\n" + describtion + "\n" + weight.ToString() + " gr.\n" + "Brew Time: ~" + brewTime.ToString() + "m", true);
             canShowInfo = false;
         }
     }

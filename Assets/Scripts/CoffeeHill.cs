@@ -38,7 +38,7 @@ public class CoffeeHill : MonoBehaviour
             if (jar)
                 grindedCoffeeAmount = 0.0025f;
             if (grinderMachine)
-                grindedCoffeeAmount = 0.00025f;
+                grindedCoffeeAmount = 0.0010f;
 
 
             fillCoffee(grindedCoffeeAmount);

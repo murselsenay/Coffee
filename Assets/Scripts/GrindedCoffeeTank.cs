@@ -37,8 +37,6 @@ public class GrindedCoffeeTank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, startPositionX, startPositionX), Mathf.Clamp(transform.position.y, startPositionY, startPositionY), Mathf.Clamp(transform.position.z, -20f,-15f));
     }
     private void OnMouseDown()

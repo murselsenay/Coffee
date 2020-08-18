@@ -17,7 +17,6 @@ public class CoffeeTank : MonoBehaviour
     public bool grinding = false;
 
 
-
     [Header("Info Text Options")]
     bool canShowInfo = true;
     GameObject instantiatedInfoTextCanvas;
@@ -26,6 +25,7 @@ public class CoffeeTank : MonoBehaviour
     public bool bottom;
     float offsetX, offsetY, offsetZ;
     internal string coffeeName;
+    Coroutine lastRoutine = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,14 +57,14 @@ public class CoffeeTank : MonoBehaviour
         _beansCount = Potentiometer.instance.coffeeBeansCount;
         insCoffeeParticle.SetActive(true);
         GameManager.instance.canFade = true;
-        StartCoroutine(SwicthSpotLightOn());
-        StartCoroutine(DeleteBeans());
-        StartCoroutine(GameManager.instance.fadingText("Grinding.."));
+        //StartCoroutine(SwicthSpotLightOn());
+        lastRoutine=StartCoroutine(DeleteBeans());
+        //StartCoroutine(GameManager.instance.fadingText("Grinding.."));
     }
     public void Fill()
     {
 
-        StartCoroutine(FillTank());
+        lastRoutine= StartCoroutine(FillTank());
 
     }
     public IEnumerator FillTank()
@@ -73,9 +73,11 @@ public class CoffeeTank : MonoBehaviour
         {
             beansCount--;
             coffeeBeans.Add(Instantiate(coffeeBeanPrefab, new Vector3(spawnPoint.transform.position.x + Random.Range(-0.5f, 0.5f), spawnPoint.transform.position.y, spawnPoint.transform.position.z + Random.Range(-0.5f, 0.5f)), Quaternion.identity));
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0f);
         }
-
+       
+        CoffeePackage.instance.leavedFromShelf = false;
+        StopCoroutine(lastRoutine);
     }
     public IEnumerator SwicthSpotLightOn()
     {
@@ -105,6 +107,7 @@ public class CoffeeTank : MonoBehaviour
             _beansCount -= 1;
             yield return new WaitForSeconds(0.12f);
         }
+        StopCoroutine(lastRoutine);
     }
 
     void ShowInfoText()

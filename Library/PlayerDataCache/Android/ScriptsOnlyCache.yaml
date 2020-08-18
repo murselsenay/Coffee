@@ -803,7 +803,7 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
-      Hash: 27bd98e5440a1bbd3dd80cfd7c43b202
+      Hash: 6678545558cb5873481c2a26efad841a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CoffeePackage
